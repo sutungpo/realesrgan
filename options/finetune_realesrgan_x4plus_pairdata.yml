@@ -17,9 +17,9 @@ datasets:
   train:
     name: DIV2K
     type: RealESRGANPairedDataset
-    dataroot_gt: datasets/DF2K
-    dataroot_lq: datasets/DF2K
-    meta_info: datasets/DF2K/meta_info/meta_info_DIV2K_sub_pair.txt
+    dataroot_gt: /kaggle/input/realesrgan-stars-232/DF2K
+    dataroot_lq: /kaggle/input/realesrgan-stars-232/DF2K
+    meta_info: datasets/DF2K/meta_info/meta_info_CS2K_sub_pair.txt
     io_backend:
       type: disk
 
