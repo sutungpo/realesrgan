@@ -7,7 +7,6 @@ import numpy as np
 import os.path as osp
 import realesrgan.data
 import realesrgan.models
-from torchvision.utils import save_image
 from torchvision.transforms import ToPILImage
 from basicsr.utils.options import parse_options
 from basicsr.data import build_dataloader, build_dataset
@@ -20,6 +19,15 @@ from basicsr.data.transforms import augment, paired_random_crop
 
 '''
 degradate mosaic images to scale size
+requires yaml file containing the following parameters:
+    lq_info meta_info in datasets['train']
+    type: RealESRGANCustomDataset in datasets['train']
+
+Usage:
+1. generate meta_info:
+python scripts/generate_meta_info.py --input datasets/DF2K/DIV2K_train_HR_sub --root datasets/DF2K --meta_info datasets/DF2K/meta_info/meta_info_DF2Kcustom.txt
+2. degradate images:
+python degradation.py -opt options/finetune_realesrgan_x4plus_custom.yml
 '''
 
 def main():
@@ -146,12 +154,12 @@ def main():
         # sharpen self.gt again, as we have changed the self.gt with self._dequeue_and_enqueue
         gt_usm = usm_sharpener(gt)
         lq = lq.contiguous()  # for the warning: grad and param do not obey the gradient layout contract
-
         # save images to disk
         lq_list = [os.path.join(root_path,dataset_opt['lq_info'],os.path.basename(path)) for path in data['gt_path']]
         for i,d in enumerate(lq):
-            d = d.mul(255.).clamp(0, 255.).cpu()
-            ToPILImage()(d).save(lq_list[i])
+            #d = d.mul(255.).clamp(0, 255.).cpu()
+            x = ToPILImage()(d)
+            x.save(lq_list[i])
 
 
 
