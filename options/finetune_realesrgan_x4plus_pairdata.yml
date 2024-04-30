@@ -16,9 +16,9 @@ high_order_degradation: False # do not use the high-order degradation generation
 datasets:
   train:
     name: DIV2K
-    type: RealESRGANPairedDataset
-    dataroot_gt: /kaggle/input/realesrgan-stars-232/DF2K
-    dataroot_lq: /kaggle/input/realesrgan-stars-232/DF2K
+    type: RealESRGANCsPairedDataset
+    dataroot_gt: /kaggle/input/resgan-stars-232
+    dataroot_lq: /kaggle/input/resgan-stars-232
     meta_info: datasets/DF2K/meta_info/meta_info_CS2K_sub_pair.txt
     io_backend:
       type: disk
@@ -29,8 +29,8 @@ datasets:
 
     # data loader
     use_shuffle: true
-    num_worker_per_gpu: 5
-    batch_size_per_gpu: 12
+    num_worker_per_gpu: 4
+    batch_size_per_gpu: 8
     dataset_enlarge_ratio: 1
     prefetch_mode: ~
 
